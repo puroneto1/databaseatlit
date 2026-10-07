@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Kejeksan Karate Club – Kas & Iuran</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+:root{--bg:#f6f3ee;--card:#fff;--ink:#1b1b1f;--mut:#76736c;--line:#e7e2d9;--red:#b3202a;--gold:#b08a3e;--ok:#1f7a4d;--okbg:#e3f3ea;--bad:#b3202a;--badbg:#fbe6e7;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111114;--card:#1b1b20;--ink:#f1eee8;--mut:#9a968d;--line:#2c2c33;--red:#e0424c;--gold:#d4ad5f;--ok:#4fcf90;--okbg:#14301f;--bad:#ff7a82;--badbg:#3a1a1d}}
+:root[data-theme="dark"]{--bg:#111114;--card:#1b1b20;--ink:#f1eee8;--mut:#9a968d;--line:#2c2c33;--red:#e0424c;--gold:#d4ad5f;--ok:#4fcf90;--okbg:#14301f;--bad:#ff7a82;--badbg:#3a1a1d}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;font-size:15px}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+main{max-width:640px;margin:0 auto;padding:0 16px 110px}
+header{padding:22px 4px 14px;display:flex;align-items:center;gap:12px}
+.logo{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--red),#6d1119);color:#fff;display:grid;place-items:center;font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;border:1px solid var(--gold)}
+h1{font-family:'Cormorant Garamond',Georgia,serif;font-size:23px;margin:0;line-height:1.1}
+.sub{color:var(--mut);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+h2{font-family:'Cormorant Garamond',serif;font-size:21px;margin:22px 0 10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
+.hero{background:linear-gradient(135deg,#1c1c22,#2a1114);color:#f4efe6;border-color:var(--gold)}
+.hero .l{color:#cbb98f;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.big{font-size:30px;font-weight:600;margin:4px 0 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat .l{color:var(--mut);font-size:12px}.stat .v{font-size:18px;font-weight:600;margin-top:4px}
+.row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border:0}.grow{flex:1;min-width:0}
+.t{font-weight:500}.m{color:var(--mut);font-size:12.5px;margin-top:2px}
+.av{width:38px;height:38px;border-radius:50%;background:var(--bg);border:1px solid var(--line);display:grid;place-items:center;font-weight:600;color:var(--gold)}
+.badge{font-size:11.5px;font-weight:600;padding:4px 9px;border-radius:99px;white-space:nowrap}
+.ok{background:var(--okbg);color:var(--ok)}.bad{background:var(--badbg);color:var(--bad)}
+.in{color:var(--ok)}.out{color:var(--bad)}
+button,input,select{font:inherit;color:inherit}
+.btn{background:var(--red);color:#fff;border:0;border-radius:12px;padding:12px 16px;font-weight:600;cursor:pointer}
+.btn.g{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.s{padding:7px 12px;font-size:13px;border-radius:10px}
+.btn.w{width:100%}
+input,select{width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);margin-bottom:10px}
+label{font-size:12px;color:var(--mut);display:block;margin:0 0 4px 2px}
+.bar{display:flex;align-items:flex-end;gap:8px;height:110px;margin-top:10px}
+.bar div{flex:1;text-align:center;font-size:11px;color:var(--mut)}
+.bar i{display:block;background:linear-gradient(var(--gold),var(--red));border-radius:6px 6px 0 0;margin-bottom:4px;min-height:3px}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;justify-content:center;padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px));z-index:5}
+nav div{display:flex;max-width:640px;width:100%}
+nav button{flex:1;background:none;border:0;color:var(--mut);font-size:11px;padding:6px 0;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px}
+nav button b{font-size:19px;font-weight:400}nav .on{color:var(--red);font-weight:600}
+.bar-top{display:flex;gap:8px;margin-bottom:12px}.bar-top input{margin:0}
+.fab{position:fixed;right:18px;bottom:calc(84px + env(safe-area-inset-bottom,0px));width:54px;height:54px;border-radius:50%;font-size:28px;padding:0;box-shadow:0 8px 20px rgba(179,32,42,.35);z-index:4}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:flex-end;justify-content:center;z-index:10}
+.sheet{background:var(--card);width:100%;max-width:640px;border-radius:22px 22px 0 0;padding:20px 18px calc(20px + env(safe-area-inset-bottom,0px));max-height:90%;overflow:auto}
+.mon{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.toast{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:10px 16px;border-radius:99px;font-size:13px;z-index:20}
+.empty{color:var(--mut);text-align:center;padding:24px 0}
+</style>
+</head>
+<body>
+<main>
+<header><div class="logo">空</div><div><div class="sub">Dojo Management</div><h1>Kejeksan Karate Club</h1></div></header>
+<div id="app"></div>
+</main>
+<button class="btn fab" id="fab" onclick="fabAct()">+</button>
+<nav><div id="nav"></div></nav>
+<div id="modal"></div>
+<script>
+const KEY='kkc_v1',SABUK=['Putih','Kuning','Oranye','Hijau','Biru','Coklat','Hitam'];
+const BLN=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+const KAT_IN=['Uang Pendaftaran','Ujian Kenaikan Sabuk','Donasi','Lainnya'];
+const KAT_OUT=['Sewa Tempat','Honor Pelatih','Perlengkapan','Event/Turnamen','Konsumsi','Lainnya'];
+let tab='home',q='',bulan=ym(new Date());
+let S=load();
+function uid(){return Math.random().toString(36).slice(2,9)}
+function ym(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')}
+function today(){return new Date().toISOString().slice(0,10)}
+function rp(n){return 'Rp '+Math.round(n||0).toLocaleString('id-ID')}
+function bl(k){const[y,m]=k.split('-');return BLN[m-1]+' '+y}
+function esc(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function demo(){const m=ym(new Date());return{members:[
+{id:'a1',nama:'Raka Pratama',sabuk:'Hijau',telp:'081234567801',iuran:100000,aktif:true},
+{id:'a2',nama:'Dewi Anjani',sabuk:'Biru',telp:'081234567802',iuran:100000,aktif:true},
+{id:'a3',nama:'Bima Saputra',sabuk:'Kuning',telp:'081234567803',iuran:80000,aktif:true}],
+pays:[{id:'p1',mid:'a1',bulan:m,jumlah:100000,tgl:today(),metode:'Tunai'}],
+kas:[{id:'k1',tgl:today(),tipe:'out',kat:'Sewa Tempat',ket:'Sewa aula bulanan',jumlah:150000}]}}
+function load(){try{const r=localStorage.getItem(KEY);if(r)return JSON.parse(r)}catch(e){}return demo()}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function toast(t){const e=document.createElement('div');e.className='toast';e.textContent=t;document.body.appendChild(e);setTimeout(()=>e.remove(),2200)}
+function mem(id){return S.members.find(m=>m.id===id)}
+function ledger(){return[...S.pays.map(p=>({id:p.id,tgl:p.tgl,tipe:'in',kat:'Iuran Bulanan',ket:(mem(p.mid)?.nama||'?')+' – '+bl(p.bulan),jumlah:p.jumlah,auto:1})),...S.kas].sort((a,b)=>b.tgl.localeCompare(a.tgl))}
+function paid(mid,b){return S.pays.find(p=>p.mid===mid&&p.bulan===b)}
+function sum(l,t,pre){return l.filter(x=>x.tipe===t&&(!pre||x.tgl.startsWith(pre))).reduce((a,x)=>a+x.jumlah,0)}
+
+const TABS=[['home','⌂','Beranda'],['mem','☗','Anggota'],['pay','✓','Iuran'],['kas','▤','Kas'],['exp','⇩','Ekspor']];
+function render(){
+  document.getElementById('nav').innerHTML=TABS.map(t=>`<button class="${tab===t[0]?'on':''}" onclick="go('${t[0]}')"><b>${t[1]}</b>${t[2]}</button>`).join('');
+  document.getElementById('fab').style.display=['mem','kas'].includes(tab)?'block':'none';
+  document.getElementById('app').innerHTML=({home:vHome,mem:vMem,pay:vPay,kas:vKas,exp:vExp})[tab]();
+}
+function go(t){tab=t;q='';render();scrollTo(0,0)}
+function fabAct(){tab==='mem'?fMem():fKas()}
+
+function vHome(){
+  const L=ledger(),now=ym(new Date()),aktif=S.members.filter(m=>m.aktif);
+  const saldo=sum(L,'in')-sum(L,'out'),tung=aktif.filter(m=>!paid(m.id,now));
+  const ms=[];for(let i=5;i>=0;i--){const d=new Date();d.setMonth(d.getMonth()-i);ms.push(ym(d))}
+  const vals=ms.map(k=>sum(L,'in',k)),mx=Math.max(...vals,1);
+  return`<div class="card hero"><div class="l">Saldo Kas</div><div class="big">${rp(saldo)}</div></div>
+  <div class="grid"><div class="card stat"><div class="l">Pemasukan ${bl(now)}</div><div class="v in">${rp(sum(L,'in',now))}</div></div>
+  <div class="card stat"><div class="l">Pengeluaran ${bl(now)}</div><div class="v out">${rp(sum(L,'out',now))}</div></div>
+  <div class="card stat"><div class="l">Anggota aktif</div><div class="v">${aktif.length}</div></div>
+  <div class="card stat"><div class="l">Belum bayar iuran</div><div class="v out">${tung.length}</div></div></div>
+  <h2>Pemasukan 6 Bulan</h2><div class="card"><div class="bar">${ms.map((k,i)=>`<div><i style="height:${vals[i]/mx*80}px"></i>${BLN[+k.slice(5)-1]}</div>`).join('')}</div></div>
+  <h2>Transaksi Terakhir</h2><div class="card">${txList(L.slice(0,5))}</div>`}
+
+function txList(L){return L.length?L.map(x=>`<div class="row"><div class="grow"><div class="t">${esc(x.ket||x.kat)}</div><div class="m">${x.tgl} · ${esc(x.kat)}</div></div><div class="t ${x.tipe}">${x.tipe==='in'?'+':'−'}${rp(x.jumlah)}</div></div>`).join(''):'<div class="empty">Belum ada transaksi</div>'}
+
+function vMem(){
+  const now=ym(new Date()),l=S.members.filter(m=>m.nama.toLowerCase().includes(q.toLowerCase()));
+  return`<div class="bar-top"><input placeholder="Cari anggota…" value="${esc(q)}" oninput="q=this.value;ml()"></div><div class="card" id="ml">${memRows(l,now)}</div>`}
+function memRows(l,now){return l.length?l.map(m=>`<div class="row" onclick="fMem('${m.id}')"><div class="av">${esc(m.nama[0])}</div><div class="grow"><div class="t">${esc(m.nama)}</div><div class="m">Sabuk ${m.sabuk} · ${rp(m.iuran)}/bln</div></div>${m.aktif?`<span class="badge ${paid(m.id,now)?'ok':'bad'}">${paid(m.id,now)?'Lunas':'Belum'}</span>`:'<span class="badge">Nonaktif</span>'}</div>`).join(''):'<div class="empty">Tidak ada anggota</div>'}
+function ml(){document.getElementById('ml').innerHTML=memRows(S.members.filter(m=>m.nama.toLowerCase().includes(q.toLowerCase())),ym(new Date()))}
+
+function shift(n){const[y,m]=bulan.split('-').map(Number);bulan=ym(new Date(y,m-1+n,1));render()}
+function vPay(){
+  const l=S.members.filter(m=>m.aktif),lunas=l.filter(m=>paid(m.id,bulan)),tot=lunas.reduce((a,m)=>a+paid(m.id,bulan).jumlah,0);
+  return`<div class="mon"><button class="btn g s" onclick="shift(-1)">‹</button><h2 style="margin:0">${bl(bulan)}</h2><button class="btn g s" onclick="shift(1)">›</button></div>
+  <div class="card stat"><div class="l">Terkumpul · ${lunas.length}/${l.length} anggota lunas</div><div class="v in">${rp(tot)}</div></div>
+  <div class="card">${l.length?l.map(m=>{const p=paid(m.id,bulan);return`<div class="row"><div class="av">${esc(m.nama[0])}</div><div class="grow"><div class="t">${esc(m.nama)}</div><div class="m">${p?'Dibayar '+p.tgl+' · '+p.metode:rp(m.iuran)}</div></div>${p?`<span class="badge ok" onclick="delPay('${p.id}')">Lunas ✕</span>`:`<button class="btn s" onclick="fPay('${m.id}')">Bayar</button><a class="btn g s" style="text-decoration:none" target="_blank" href="${wa(m)}">WA</a>`}</div>`}).join(''):'<div class="empty">Belum ada anggota aktif</div>'}</div>`}
+function wa(m){let t=(m.telp||'').replace(/\D/g,'');if(t.startsWith('0'))t='62'+t.slice(1);return'https://wa.me/'+t+'?text='+encodeURIComponent(`Assalamualaikum, mengingatkan iuran Kejeksan Karate Club ${bl(bulan)} atas nama ${m.nama} sebesar ${rp(m.iuran)}. Terima kasih. Osu!`)}
+
+function vKas(){const L=ledger(),now=ym(new Date());return`<div class="grid"><div class="card stat"><div class="l">Masuk (semua)</div><div class="v in">${rp(sum(L,'in'))}</div></div><div class="card stat"><div class="l">Keluar (semua)</div><div class="v out">${rp(sum(L,'out'))}</div></div></div><div class="card">${L.length?L.map(x=>`<div class="row" ${x.auto?'':`onclick="fKas('${x.id}')"`}><div class="grow"><div class="t">${esc(x.ket||x.kat)}</div><div class="m">${x.tgl} · ${esc(x.kat)}${x.auto?' · otomatis':''}</div></div><div class="t ${x.tipe}">${x.tipe==='in'?'+':'−'}${rp(x.jumlah)}</div></div>`).join(''):'<div class="empty">Belum ada transaksi</div>'}</div>`}
+
+function vExp(){return`<h2>Integrasi Spreadsheet</h2><div class="card"><div class="m" style="margin-bottom:12px">Ekspor berisi 3 sheet: <b>Anggota</b>, <b>Iuran</b>, <b>Kas</b>. File .xlsx bisa dibuka di Excel & Google Sheets (Drive → Upload → Buka dengan Google Sheets).</div>
+<button class="btn w" onclick="exportX()" style="margin-bottom:8px">⇩ Unduh Excel (.xlsx)</button>
+<button class="btn g w" onclick="copyTSV()" style="margin-bottom:8px">⧉ Salin Kas (tempel langsung ke Google Sheets)</button>
+<label>Impor anggota dari Excel / CSV (kolom: Nama, Sabuk, Telepon, Iuran)</label><input type="file" accept=".xlsx,.xls,.csv" onchange="importX(this)"></div>
+<h2>Pengaturan</h2><div class="card"><button class="btn g w" onclick="if(confirm('Hapus SEMUA data? Ekspor dulu bila perlu.')){S={members:[],pays:[],kas:[]};save();go('home')}">Hapus semua data (mulai baru)</button>
+<div class="m" style="margin-top:10px">Data tersimpan di perangkat ini. Lakukan ekspor berkala sebagai cadangan.</div></div>`}
+
+function sheets(){return{
+Anggota:S.members.map(m=>({Nama:m.nama,Sabuk:m.sabuk,Telepon:m.telp,'Iuran/Bulan':m.iuran,Status:m.aktif?'Aktif':'Nonaktif'})),
+Iuran:S.pays.map(p=>({Tanggal:p.tgl,Anggota:mem(p.mid)?.nama||'?',Bulan:p.bulan,Jumlah:p.jumlah,Metode:p.metode})),
+Kas:ledger().reverse().map(x=>({Tanggal:x.tgl,Tipe:x.tipe==='in'?'Pemasukan':'Pengeluaran',Kategori:x.kat,Keterangan:x.ket,Jumlah:x.jumlah}))}}
+async function exportX(){
+  if(!window.XLSX)return toast('Library Excel belum termuat');
+  const wb=XLSX.utils.book_new(),s=sheets();
+  for(const k in s)XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(s[k]),k);
+  const data=XLSX.write(wb,{type:'array',bookType:'xlsx'});
+  try{const d=await claude.use('downloads');if(!d)return toast('Unduhan tidak tersedia di tampilan ini');await d.save({filename:'KKC-Keuangan-'+today()+'.xlsx',data});toast('File siap disimpan')}catch(e){if(e&&e.code!=='declined')toast('Gagal mengunduh')}}
+async function copyTSV(){const r=sheets().Kas,h=Object.keys(r[0]||{Tanggal:1,Tipe:1,Kategori:1,Keterangan:1,Jumlah:1});
+  const t=[h.join('\t'),...r.map(o=>h.map(k=>o[k]).join('\t'))].join('\n');
+  try{await navigator.clipboard.writeText(t);toast('Tersalin – tempel di Google Sheets')}catch(e){toast('Salin diblokir; gunakan unduh .xlsx')}}
+function importX(el){const f=el.files[0];if(!f||!window.XLSX)return;const r=new FileReader();
+  r.onload=e=>{try{const wb=XLSX.read(e.target.result,{type:'array'}),rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);let n=0;
+    rows.forEach(o=>{const nama=o.Nama||o.nama;if(!nama)return;S.members.push({id:uid(),nama:String(nama),sabuk:SABUK.includes(o.Sabuk)?o.Sabuk:'Putih',telp:String(o.Telepon||o.telp||''),iuran:+(o.Iuran||o['Iuran/Bulan'])||100000,aktif:true});n++});
+    save();toast(n+' anggota diimpor');go('mem')}catch(err){toast('File tidak terbaca')}};r.readAsArrayBuffer(f)}
+
+function sheet(html){document.getElementById('modal').innerHTML=`<div class="ov" onclick="if(event.target===this)closeM()"><div class="sheet">${html}</div></div>`}
+function closeM(){document.getElementById('modal').innerHTML=''}
+function v(id){return document.getElementById(id).value}
+function fMem(id){const m=id?mem(id):{nama:'',sabuk:'Putih',telp:'',iuran:100000,aktif:true};
+  sheet(`<h2 style="margin-top:0">${id?'Edit':'Tambah'} Anggota</h2><label>Nama lengkap</label><input id="f1" value="${esc(m.nama)}"><label>Tingkatan sabuk</label><select id="f2">${SABUK.map(s=>`<option ${s===m.sabuk?'selected':''}>${s}</option>`).join('')}</select><label>No. WhatsApp</label><input id="f3" type="tel" value="${esc(m.telp)}"><label>Iuran per bulan (Rp)</label><input id="f4" type="number" value="${m.iuran}"><label>Status</label><select id="f5"><option value="1" ${m.aktif?'selected':''}>Aktif</option><option value="0" ${m.aktif?'':'selected'}>Nonaktif</option></select>
+  <button class="btn w" onclick="sMem('${id||''}')">Simpan</button>${id?`<button class="btn g w" style="margin-top:8px;color:var(--bad)" onclick="dMem('${id}')">Hapus anggota</button>`:''}`)}
+function sMem(id){const nama=v('f1').trim();if(!nama)return toast('Nama wajib diisi');const o={nama,sabuk:v('f2'),telp:v('f3'),iuran:+v('f4')||0,aktif:v('f5')==='1'};
+  if(id)Object.assign(mem(id),o);else S.members.push({id:uid(),...o});save();closeM();render()}
+function dMem(id){if(!confirm('Hapus anggota beserta riwayat iurannya?'))return;S.members=S.members.filter(m=>m.id!==id);S.pays=S.pays.filter(p=>p.mid!==id);save();closeM();render()}
+function fPay(mid){const m=mem(mid);sheet(`<h2 style="margin-top:0">Catat Iuran</h2><div class="m" style="margin-bottom:12px">${esc(m.nama)} · ${bl(bulan)}</div><label>Jumlah (Rp)</label><input id="f1" type="number" value="${m.iuran}"><label>Tanggal bayar</label><input id="f2" type="date" value="${today()}"><label>Metode</label><select id="f3"><option>Tunai</option><option>Transfer</option><option>QRIS</option></select><button class="btn w" onclick="sPay('${mid}')">Simpan Pembayaran</button>`)}
+function sPay(mid){S.pays.push({id:uid(),mid,bulan,jumlah:+v('f1')||0,tgl:v('f2'),metode:v('f3')});save();closeM();render();toast('Pembayaran tercatat')}
+function delPay(id){if(confirm('Batalkan pembayaran ini?')){S.pays=S.pays.filter(p=>p.id!==id);save();render()}}
+function fKas(id){const k=id?S.kas.find(x=>x.id===id):{tipe:'out',tgl:today(),kat:'',ket:'',jumlah:''};
+  sheet(`<h2 style="margin-top:0">${id?'Edit':'Catat'} Transaksi</h2><label>Jenis</label><select id="f1" onchange="catOpt()"><option value="out" ${k.tipe==='out'?'selected':''}>Pengeluaran</option><option value="in" ${k.tipe==='in'?'selected':''}>Pemasukan</option></select><label>Kategori</label><select id="f2"></select><label>Keterangan</label><input id="f3" value="${esc(k.ket)}"><label>Jumlah (Rp)</label><input id="f4" type="number" value="${k.jumlah}"><label>Tanggal</label><input id="f5" type="date" value="${k.tgl}">
+  <button class="btn w" onclick="sKas('${id||''}')">Simpan</button>${id?`<button class="btn g w" style="margin-top:8px;color:var(--bad)" onclick="S.kas=S.kas.filter(x=>x.id!=='${id}');save();closeM();render()">Hapus</button>`:''}`);catOpt(k.kat)}
+function catOpt(sel){const l=v('f1')==='in'?KAT_IN:KAT_OUT;document.getElementById('f2').innerHTML=l.map(c=>`<option ${c===sel?'selected':''}>${c}</option>`).join('')}
+function sKas(id){const j=+v('f4');if(!j)return toast('Isi jumlah');const o={tipe:v('f1'),kat:v('f2'),ket:v('f3'),jumlah:j,tgl:v('f5')||today()};
+  if(id)Object.assign(S.kas.find(x=>x.id===id),o);else S.kas.push({id:uid(),...o});save();closeM();render()}
+render();
+</script>
+</body>
+</html>
